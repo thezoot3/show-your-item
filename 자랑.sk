@@ -1,0 +1,33 @@
+command /자랑:
+	trigger:
+		if {인장.%player%} is not set:
+			set {인장.%player%} to true
+			set {_w} to player's walk speed
+			set {_fl} to player's fly speed
+			set player's walk speed to 0
+			set player's fly speed to 0
+			set {_s} to helmet of player
+			set helmet of player to player's tool
+			set {_f} to player's tool
+			set {_n} to name of player's tool
+			drawSimpleHalo particle "redstone", center player, id "%player%", rainbowMode true, visibleRange 32
+			if {_n} is not set:
+				send "&l[ ! ] 손에 든 아이템을 자랑하고 있습니다"
+				wait 3 second
+				clear {인장.%player%}
+				set player's helmet to {_s}
+				set player's walk speed to {_w}
+				set player's fly speed to {_fl}
+				stopEffect id "%player%"
+			else:
+				create hologram "%name of player's tool%" at location 3 up player for 3 second
+			send "&l[ ! ] 손에 든 아이템을 자랑하고 있습니다"
+			wait 3 second
+			clear {인장.%player%}
+			set player's helmet to {_s}
+			set player's walk speed to {_w}
+			set player's fly speed to {_fl}
+			stopEffect id "%player%"
+on jump:
+	if {인장.%player%} is true:
+		cancel event
